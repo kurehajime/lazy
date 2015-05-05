@@ -16,6 +16,11 @@ import (
 	"time"
 )
 
+const (
+	UTF8      = 65001
+	SHIFT_JIS = 932
+)
+
 func main() {
 	var text string
 	var err error
@@ -23,7 +28,7 @@ func main() {
 	if ok == true {
 		encode := getConsoleLang()
 		switch encode {
-		case 932:
+		case SHIFT_JIS:
 			text, err = utf2sjis(text)
 			if err != nil {
 				fmt.Println(err.Error())
@@ -90,17 +95,17 @@ func lazyPrint(text string) {
 //for Windows
 func getConsoleLang() int {
 	if runtime.GOOS != "windows" {
-		return 65001 //default:utf-8
+		return UTF8 //default:utf-8
 	}
 	out, err := exec.Command("chcp").Output()
 	if err != nil {
 		fmt.Println(err)
-		return 65001 //default:utf-8
+		return UTF8 //default:utf-8
 	}
 	rtn, err := strconv.Atoi(string(regexp.MustCompile(`(\d+)`).FindSubmatch([]byte(string(out)))[0]))
 	if err != nil {
 		fmt.Println(err)
-		return 65001 //default:utf-8
+		return UTF8 //default:utf-8
 	}
 	return rtn
 }
