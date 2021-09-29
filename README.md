@@ -9,6 +9,6 @@ lazy command
 
 ```sh
 
- go get -u github.com/kurehajime/lazy
+go install github.com/kurehajime/lazy@latest
 
 ```
